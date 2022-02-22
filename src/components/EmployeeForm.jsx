@@ -6,7 +6,11 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PersonaldetailOne from "./Forms/PersonaldetailOne";
-
+import Bankdtails from "./Forms/Bankdtails";
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { Paper } from "@mui/material";
+import PersonaldetailsTwo from "./Forms/PersonaldetailsTwo";
+import Currentstatus from "./Forms/Currentstatus";
 const steps = [
   "Personal Details",
   "Bank Details",
@@ -19,17 +23,27 @@ const steps = [
 export default function EmployeeForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
+  const [employedetails, setemployedetails] = React.useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    phoneNumber: "",
+    email: "",
+  });
 
   const getContent = (activeStep) => {
     switch (activeStep) {
       case 0:
-        return <PersonaldetailOne />;
+        return <PersonaldetailOne details={employedetails} />;
         break;
       case 1:
-        return "Bank Details";
+        return <Bankdtails />;
         break;
       case 2:
-        return "personal details";
+        return <PersonaldetailsTwo />;
+        break;
+      case 3:
+        return <Currentstatus />;
         break;
 
       default:
@@ -75,66 +89,76 @@ export default function EmployeeForm() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Stepper nonLinear activeStep={activeStep}>
-        {steps.map((label, index) => (
-          <Step key={label} completed={completed[index]}>
-            <StepButton
-              color="inherit"
-              onClick={handleStep(index)}
-            ></StepButton>
-            <br />
-            <p>{label}</p>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        <React.Fragment>
-          <div style={{ margin: "10px" }}>{getContent(activeStep)}</div>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <Button color="inherit" disabled sx={{ mr: 1 }} variant="contained">
-              Remove
-            </Button>
-            <Box>
-              <Button
+    <Paper sx={{ width: "80%", margin: "auto", padding: "20px" }}>
+      <Box sx={{ width: "100%" }}>
+        <Stepper nonLinear activeStep={activeStep}>
+          {steps.map((label, index) => (
+            <Step key={label} completed={completed[index]}>
+              <StepButton
                 color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1, color: "blue", borderColor: "blue" }}
-                variant="outlined"
+                onClick={handleStep(index)}
+              ></StepButton>
+              <br />
+              <p>{label}</p>
+            </Step>
+          ))}
+        </Stepper>
+        <div>
+          <React.Fragment>
+            <form style={{ margin: "10px" }}>
+              {getContent(activeStep)}
+              <Box
+                sx={{
+                  marginTop: "30px",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                }}
               >
-                Previous
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={handleReset}
-                sx={{ color: "red", borderColor: "red", mr: 1 }}
-              >
-                Exit
-              </Button>
+                <Button
+                  color="inherit"
+                  disabled
+                  sx={{ mr: 1 }}
+                  variant="contained"
+                >
+                  Remove
+                </Button>
+                <Box>
+                  <Button
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ mr: 1, color: "blue", borderColor: "blue" }}
+                    variant="outlined"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={handleReset}
+                    sx={{ color: "red", borderColor: "red", mr: 1 }}
+                  >
+                    Exit
+                  </Button>
 
-              <Button
-                onClick={handleNext}
-                sx={{ mr: 1 }}
-                disabled={activeStep === 5}
-                variant="contained"
-              >
-                Next
-              </Button>
-            </Box>
+                  <Button
+                    sx={{ mr: 1 }}
+                    onClick={handleNext}
+                    disabled={activeStep === 5}
+                    variant="contained"
+                  >
+                    Next
+                  </Button>
+                </Box>
 
-            <Button variant="contained" disabled={activeStep < 5}>
-              Submit
-            </Button>
-          </Box>
-        </React.Fragment>
-      </div>
-    </Box>
+                <Button variant="contained" disabled={activeStep < 5}>
+                  Submit
+                </Button>
+              </Box>
+            </form>
+          </React.Fragment>
+        </div>
+      </Box>
+    </Paper>
   );
 }
