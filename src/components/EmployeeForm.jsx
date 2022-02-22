@@ -5,6 +5,7 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import PersonaldetailOne from "./Forms/PersonaldetailOne";
 
 const steps = [
   "Personal Details",
@@ -22,7 +23,7 @@ export default function EmployeeForm() {
   const getContent = (activeStep) => {
     switch (activeStep) {
       case 0:
-        return "personal details";
+        return <PersonaldetailOne />;
         break;
       case 1:
         return "Bank Details";
