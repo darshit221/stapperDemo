@@ -7,10 +7,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PersonaldetailOne from "./Forms/PersonaldetailOne";
 import Bankdtails from "./Forms/Bankdtails";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+
 import { Paper } from "@mui/material";
 import PersonaldetailsTwo from "./Forms/PersonaldetailsTwo";
 import Currentstatus from "./Forms/Currentstatus";
+import ExperienceDetails from "./Forms/ExperienceDetails";
+import { useDispatch } from "react-redux";
+import { addDetails } from "./redux/actionCreator";
+import EductionDetails from "./Forms/EductionDetails";
 const steps = [
   "Personal Details",
   "Bank Details",
@@ -23,27 +27,56 @@ const steps = [
 export default function EmployeeForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
-  const [employedetails, setemployedetails] = React.useState({
+  const intialData = {
     firstName: "",
     lastName: "",
     dob: "",
-    phoneNumber: "",
+    phone: "",
     email: "",
-  });
+    accountNumber: "",
+    ifsc: "",
+    panCard: "",
+    adharCard: "",
+    year: "",
+    month: "",
+    skills: "",
+    designation: "",
+    department: "",
+    ctc: "",
+    workingForm: "",
+    company: "",
+    E_designation: "",
+    E_department: "",
+    E_ctc: "",
+    from: "",
+    to: "",
+    course: "",
+    university: "",
+    passOn: "",
+    Grade: "",
+  };
 
+  const [formdata, setFormdata] = React.useState(intialData);
+  const dispatch = useDispatch();
   const getContent = (activeStep) => {
     switch (activeStep) {
       case 0:
-        return <PersonaldetailOne details={employedetails} />;
+        return <PersonaldetailOne formdata={formdata} setdata={setFormdata} />;
         break;
       case 1:
-        return <Bankdtails />;
+        return <Bankdtails formdata={formdata} setdata={setFormdata} />;
         break;
       case 2:
-        return <PersonaldetailsTwo />;
+        return <PersonaldetailsTwo formdata={formdata} setdata={setFormdata} />;
         break;
       case 3:
-        return <Currentstatus />;
+        return <Currentstatus formdata={formdata} setdata={setFormdata} />;
+        break;
+      case 4:
+        return <ExperienceDetails formdata={formdata} setdata={setFormdata} />;
+        break;
+      case 5:
+        return <EductionDetails formdata={formdata} setdata={setFormdata} />;
         break;
 
       default:
@@ -88,6 +121,11 @@ export default function EmployeeForm() {
     setCompleted({});
   };
 
+  const handlesubmit = (e) => {
+    console.log(formdata);
+    e.preventDefault();
+  };
+
   return (
     <Paper sx={{ width: "80%", margin: "auto", padding: "20px" }}>
       <Box sx={{ width: "100%" }}>
@@ -105,7 +143,7 @@ export default function EmployeeForm() {
         </Stepper>
         <div>
           <React.Fragment>
-            <form style={{ margin: "10px" }}>
+            <form style={{ margin: "10px" }} onSubmit={handlesubmit}>
               {getContent(activeStep)}
               <Box
                 sx={{
@@ -146,12 +184,16 @@ export default function EmployeeForm() {
                     onClick={handleNext}
                     disabled={activeStep === 5}
                     variant="contained"
+                    type="submit"
                   >
                     Next
                   </Button>
                 </Box>
 
-                <Button variant="contained" disabled={activeStep < 5}>
+                <Button
+                  variant="contained"
+                  onClick={dispatch(addDetails(formdata))}
+                >
                   Submit
                 </Button>
               </Box>

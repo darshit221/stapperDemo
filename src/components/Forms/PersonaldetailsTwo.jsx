@@ -1,7 +1,13 @@
 import { Box, Container, InputLabel, TextField } from "@mui/material";
 import React from "react";
 
-function PersonaldetailsTwo() {
+function PersonaldetailsTwo({ formdata, setdata }) {
+  const { year, month, skills } = formdata;
+
+  const handlechange = (e) => {
+    const { name, value } = e.target;
+    setdata({ ...formdata, [name]: value });
+  };
   return (
     <Container>
       <div style={{ textAlign: "center" }}>
@@ -27,6 +33,9 @@ function PersonaldetailsTwo() {
           label="Year"
           variant="standard"
           type="number"
+          name="year"
+          value={year}
+          onChange={handlechange}
         />
         <TextField
           sx={{ width: "45%" }}
@@ -34,6 +43,9 @@ function PersonaldetailsTwo() {
           label="Month"
           type="number"
           variant="standard"
+          name="month"
+          value={month}
+          onChange={handlechange}
         />
         <TextField
           fullWidth
@@ -41,6 +53,9 @@ function PersonaldetailsTwo() {
           label="Skills"
           type="text"
           variant="standard"
+          name="skills"
+          value={skills}
+          onChange={handlechange}
         />
       </Box>
     </Container>

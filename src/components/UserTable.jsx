@@ -1,6 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/system";
 import TablePaginationUnstyled from "@mui/base/TablePaginationUnstyled";
+import { useSelector } from "react-redux";
 
 const Root = styled("div")`
   table {
@@ -21,42 +22,9 @@ const Root = styled("div")`
   }
 `;
 
-const CustomTablePagination = styled(TablePaginationUnstyled)`
-  & .MuiTablePaginationUnstyled-toolbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-
-  & .MuiTablePaginationUnstyled-selectLabel {
-    margin: 0;
-  }
-
-  & .MuiTablePaginationUnstyled-displayedRows {
-    margin: 0;
-
-    @media (min-width: 768px) {
-      margin-left: auto;
-    }
-  }
-
-  & .MuiTablePaginationUnstyled-spacer {
-    display: none;
-  }
-
-  & .MuiTablePaginationUnstyled-actions {
-    display: flex;
-    gap: 0.25rem;
-  }
-`;
-
 export default function UserTable() {
+  const data = useSelector((state) => state);
+  console.log(data);
   return (
     <Root>
       <table aria-label="custom pagination table">
