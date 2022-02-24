@@ -2,19 +2,24 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import StepButton from "@mui/material/StepButton";
+import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import PersonaldetailOne from "./Forms/PersonaldetailOne";
+
+import { FormProvider, useForm } from "react-hook-form";
+import { Paper } from "@mui/material";
+
 import Bankdtails from "./Forms/Bankdtails";
 
-import { Paper } from "@mui/material";
-import PersonaldetailsTwo from "./Forms/PersonaldetailsTwo";
 import Currentstatus from "./Forms/Currentstatus";
 import ExperienceDetails from "./Forms/ExperienceDetails";
+import EductionDetails from "./Forms/EductionDetails";
+import Listing from "./Forms/Listing";
+import Professionaldetails from "./Forms/Professionaldetails";
+import PersonalDetail from "./Forms/Personaldetail";
 import { useDispatch } from "react-redux";
 import { addDetails } from "./redux/actionCreator";
-import EductionDetails from "./Forms/EductionDetails";
+import { Link, useNavigate } from "react-router-dom";
+
 const steps = [
   "Personal Details",
   "Bank Details",
@@ -26,125 +31,100 @@ const steps = [
 
 export default function EmployeeForm() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState({});
-  const intialData = {
-    firstName: "",
-    lastName: "",
-    dob: "",
-    phone: "",
-    email: "",
-    accountNumber: "",
-    ifsc: "",
-    panCard: "",
-    adharCard: "",
-    year: "",
-    month: "",
-    skills: "",
-    designation: "",
-    department: "",
-    ctc: "",
-    workingForm: "",
-    company: "",
-    E_designation: "",
-    E_department: "",
-    E_ctc: "",
-    from: "",
-    to: "",
-    course: "",
-    university: "",
-    passOn: "",
-    Grade: "",
-  };
+  const method = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      dob: "",
+      phone: "",
+      email: "",
+      accountNumber: "",
+      ifsc: "",
+      panCard: "",
+      adharCard: "",
+      year: "",
+      month: "",
+      skills: [],
+      company: "Albiorix Technology Private Limited",
+      designation: "",
+      department: "",
+      ctc: "",
+      workingForm: "",
+      E_company: "",
+      E_designation: "",
+      E_department: "",
+      E_ctc: "",
+      from: "",
+      to: "",
+      course: "",
+      university: "",
+      passOn: "",
+      grade: "",
+    },
+  });
 
-  const [formdata, setFormdata] = React.useState(intialData);
-  const dispatch = useDispatch();
-  const getContent = (activeStep) => {
+  const getStepContent = (activeStep) => {
     switch (activeStep) {
       case 0:
-        return <PersonaldetailOne formdata={formdata} setdata={setFormdata} />;
+        return <PersonalDetail />;
         break;
       case 1:
-        return <Bankdtails formdata={formdata} setdata={setFormdata} />;
+        return <Bankdtails />;
         break;
       case 2:
-        return <PersonaldetailsTwo formdata={formdata} setdata={setFormdata} />;
+        return <Professionaldetails />;
         break;
       case 3:
-        return <Currentstatus formdata={formdata} setdata={setFormdata} />;
+        return <Currentstatus />;
         break;
       case 4:
-        return <ExperienceDetails formdata={formdata} setdata={setFormdata} />;
+        return <ExperienceDetails />;
         break;
       case 5:
-        return <EductionDetails formdata={formdata} setdata={setFormdata} />;
+        return <EductionDetails />;
         break;
 
       default:
         break;
     }
   };
-
-  const totalSteps = () => {
-    return steps.length;
+  const navigate = useNavigate();
+  const back = () => {
+    navigate("/");
   };
 
-  const completedSteps = () => {
-    return Object.keys(completed).length;
+  const resetData = () => {
+    method.reset();
   };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps();
-  };
-
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
+  const dispatch = useDispatch();
+  const handleNext = (data) => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep == 5) {
+      dispatch(addDetails(data));
+      resetData();
+      back();
+    }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  };
-
-  const handlesubmit = (e) => {
-    console.log(formdata);
-    e.preventDefault();
-  };
-
   return (
     <Paper sx={{ width: "80%", margin: "auto", padding: "20px" }}>
       <Box sx={{ width: "100%" }}>
-        <Stepper nonLinear activeStep={activeStep}>
+        <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label, index) => (
-            <Step key={label} completed={completed[index]}>
-              <StepButton
-                color="inherit"
-                onClick={handleStep(index)}
-              ></StepButton>
-              <br />
-              <p>{label}</p>
+            <Step key={(label, index)}>
+              <StepLabel>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
-        <div>
-          <React.Fragment>
-            <form style={{ margin: "10px" }} onSubmit={handlesubmit}>
-              {getContent(activeStep)}
+
+        <React.Fragment>
+          <FormProvider {...method}>
+            <form onSubmit={method.handleSubmit(handleNext)}>
+              {getStepContent(activeStep)}
               <Box
                 sx={{
                   marginTop: "30px",
@@ -166,40 +146,41 @@ export default function EmployeeForm() {
                     color="inherit"
                     disabled={activeStep === 0}
                     onClick={handleBack}
+                    sx={{ mr: 1 }}
                     sx={{ mr: 1, color: "blue", borderColor: "blue" }}
                     variant="outlined"
                   >
                     Previous
                   </Button>
+                  <Link to="/">
+                    <Button
+                      variant="outlined"
+                      sx={{ color: "red", borderColor: "red", mr: 1 }}
+                    >
+                      Exit
+                    </Button>
+                  </Link>
                   <Button
-                    variant="outlined"
-                    onClick={handleReset}
-                    sx={{ color: "red", borderColor: "red", mr: 1 }}
-                  >
-                    Exit
-                  </Button>
-
-                  <Button
-                    sx={{ mr: 1 }}
-                    onClick={handleNext}
-                    disabled={activeStep === 5}
-                    variant="contained"
                     type="submit"
+                    variant="contained"
+                    disabled={activeStep >= 5}
                   >
                     Next
                   </Button>
                 </Box>
 
                 <Button
+                  type="submit"
                   variant="contained"
-                  onClick={dispatch(addDetails(formdata))}
+                  disabled={activeStep < 5}
+                  sx={{ mr: 1 }}
                 >
                   Submit
                 </Button>
               </Box>
             </form>
-          </React.Fragment>
-        </div>
+          </FormProvider>
+        </React.Fragment>
       </Box>
     </Paper>
   );

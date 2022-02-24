@@ -1,54 +1,85 @@
-import { Container, TextField } from "@mui/material";
 import React from "react";
+import { Container, InputLabel, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-function Bankdtails() {
+function PersonalDetail() {
   const {
     control,
     formState: { errors },
   } = useFormContext();
   return (
     <div style={{ textAlign: "center" }}>
-      <h2>Bank Details</h2>
+      <h2>Personal Details</h2>
       <Container>
+        <InputLabel htmlFor="input-with-icon-adornment">
+          <InputLabel htmlFor="input-with-icon-adornment">
+            Profile picture
+          </InputLabel>
+          <TextField
+            id="standard-basic"
+            label="Profile Picture"
+            variant="standard"
+            type="file"
+          />
+        </InputLabel>
         <Controller
           control={control}
-          name="accountNumber"
+          name="firstName"
           rules={{ required: "required" }}
           render={({ field }) => (
             <TextField
               fullWidth
               id="standard-basic"
-              label="AccountNumber"
+              label="First Name"
               variant="standard"
               type="text"
               {...field}
-              error={Boolean(errors.accountNumber)}
-              helperText={errors.accountNumber?.message}
+              error={Boolean(errors.firstName)}
+              helperText={errors.firstName?.message}
             />
           )}
         />
         <Controller
           control={control}
-          name="ifsc"
+          name="lastName"
           rules={{ required: "required" }}
           render={({ field }) => (
             <TextField
               fullWidth
               id="standard-basic"
-              label="IFSC"
+              label="last Name"
               variant="standard"
               type="text"
               {...field}
-              error={Boolean(errors.ifsc)}
-              helperText={errors.ifsc?.message}
+              error={Boolean(errors.lastName)}
+              helperText={errors.lastName?.message}
             />
           )}
         />
         <Controller
           control={control}
-          name="panCard"
+          name="dob"
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Birth Date"
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...field}
+              error={Boolean(errors.dob)}
+              helperText={errors.dob?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="phone"
           rules={{
-            required: "required",
+            required: "Either phone or email is required",
             maxLength: {
               value: 10,
               message: "Invalid",
@@ -58,7 +89,7 @@ function Bankdtails() {
               message: "Invalid",
             },
             pattern: {
-              value: /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
+              value: /^[0-9]*$/,
               message: "Invalid",
             },
           }}
@@ -66,30 +97,21 @@ function Bankdtails() {
             <TextField
               fullWidth
               id="standard-basic"
-              label="Pan Number"
+              label="Phone Number"
               variant="standard"
               type="text"
               {...field}
-              error={Boolean(errors.panCard)}
-              helperText={errors.panCard?.message}
+              error={Boolean(errors.phone)}
+              helperText={errors.phone?.message}
             />
           )}
         />
         <Controller
           control={control}
-          name="adharCard"
+          name="email"
           rules={{
-            required: "required",
-            maxLength: {
-              value: 12,
-              message: "Invalid",
-            },
-            minLength: {
-              value: 12,
-              message: "Invalid",
-            },
             pattern: {
-              value: /^[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}$/,
+              value: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
               message: "Invalid",
             },
           }}
@@ -97,12 +119,12 @@ function Bankdtails() {
             <TextField
               fullWidth
               id="standard-basic"
-              label="Adhar Card Number"
+              label="Email"
               variant="standard"
               type="text"
               {...field}
-              error={Boolean(errors.adharCard)}
-              helperText={errors.adharCard?.message}
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
             />
           )}
         />
@@ -111,4 +133,4 @@ function Bankdtails() {
   );
 }
 
-export default Bankdtails;
+export default PersonalDetail;

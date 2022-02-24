@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import EmployeeForm from "./components/EmployeeForm";
 import Home from "./components/Home";
-import MultipleSelectChip from "./components/MultipleSelectChip";
+
 
 function App() {
   return (

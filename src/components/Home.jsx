@@ -48,9 +48,8 @@ function Home() {
               </Link>
             </Grid>
           </Grid>
-          <div>
-            <UserTable />
-          </div>
+
+          <UserTable />
         </Paper>
       </Container>
     </div>

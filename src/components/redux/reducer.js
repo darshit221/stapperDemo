@@ -1,33 +1,16 @@
 import { ADD_DETAILS } from "./actionType";
-
+import { v4 as uuidv4 } from "uuid";
 const initialState = {
-  firstName: "",
-  lastName: "",
-  dob: "",
-  phone: "",
-  email: "",
-  accountNumber: "",
-  ifsc: "",
-  panCard: "",
-  adharCard: "",
-  year: "",
-  month: "",
-  skills: "",
-  designation: "",
-  department: "",
-  ctc: "",
-  workingForm: "",
-  company: "",
-  E_designation: "",
-  E_department: "",
-  E_ctc: "",
-  From: "",
-  to: "",
+employess:[]
 };
 const detailReducer = (state = initialState, { type, payload }) => {
+  console.log('state', payload)
   switch (type) {
     case ADD_DETAILS:
-      return { ...state, ...payload };
+      return { 
+        ...state, 
+        employess:[ ...state.employess,{ id:uuidv4(),...payload}]
+        };
 
     default:
       return state;

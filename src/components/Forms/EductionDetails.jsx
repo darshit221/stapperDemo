@@ -1,16 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import { TextField, Button, Box, Paper } from "@mui/material";
+import { Controller, useFormContext } from "react-hook-form";
 
 import React, { useState } from "react";
 
-function EductionDetails({ formdata, setdata }) {
+function EductionDetails() {
   const [count, setCount] = useState(0);
 
   const forms = [];
 
   const multipleFrom = (count) => {
     for (let i = 1; i <= count; i++) {
-      forms.push(<EductionDetailsFrom formdata={formdata} setdata={setdata} />);
+      forms.push(<EductionDetailsFrom />);
     }
   };
   multipleFrom(count);
@@ -33,13 +34,11 @@ function EductionDetails({ formdata, setdata }) {
 
 export default EductionDetails;
 
-const EductionDetailsFrom = ({ formdata, setdata }) => {
-  const { course, university, passOn, Grade } = formdata;
-  const handlechange = (e) => {
-    const { name, value } = e.target;
-    setdata({ ...formdata, [name]: value });
-  };
-
+const EductionDetailsFrom = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box
       sx={{
@@ -49,50 +48,71 @@ const EductionDetailsFrom = ({ formdata, setdata }) => {
       }}
     >
       <Paper variant="outlined" sx={{ padding: "30px", borderRadius: "30px" }}>
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="course"
-          type="text"
-          variant="standard"
+        <Controller
+          control={control}
           name="course"
-          value={course}
-          onChange={handlechange}
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="course"
+              variant="standard"
+              type="text"
+              {...field}
+              error={Boolean(errors.course)}
+              helperText={errors.course?.message}
+            />
+          )}
         />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="university"
-          type="text"
-          variant="standard"
+        <Controller
+          control={control}
           name="university"
-          value={university}
-          onChange={handlechange}
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="university"
+              variant="standard"
+              type="text"
+              {...field}
+              error={Boolean(errors.university)}
+              helperText={errors.university?.message}
+            />
+          )}
         />
 
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label=" from"
-          variant="standard"
-          type={"date"}
-          InputLabelProps={{
-            shrink: true,
-          }}
+        <Controller
+          control={control}
           name="passOn"
-          value={passOn}
-          onChange={handlechange}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label=" passOn"
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...field}
+            />
+          )}
         />
-
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="Grade"
-          variant="standard"
-          type="number"
-          name="Grade"
-          value={Grade}
-          onChange={handlechange}
+        <Controller
+          control={control}
+          name="grade"
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Grade"
+              variant="standard"
+              type="number"
+              {...field}
+            />
+          )}
         />
       </Paper>
     </Box>

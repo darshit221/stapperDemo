@@ -1,16 +1,16 @@
 import AddIcon from "@mui/icons-material/Add";
 import { TextField, Button, Box, Paper } from "@mui/material";
-import { borderRadius } from "@mui/system";
-import React, { useState } from "react";
+import { useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
-function ExperienceDetails({ formdata, setdata }) {
+function ExperienceDetails() {
   const [count, setCount] = useState(0);
 
   const forms = [];
 
   const multipleFrom = (count) => {
     for (let i = 1; i <= count; i++) {
-      forms.push(<ExperieceDetailFrom formdata={formdata} setdata={setdata} />);
+      forms.push(<ExperieceDetailFrom />);
     }
   };
   multipleFrom(count);
@@ -34,13 +34,11 @@ function ExperienceDetails({ formdata, setdata }) {
 
 export default ExperienceDetails;
 
-const ExperieceDetailFrom = ({ formdata, setdata }) => {
-  const { company, E_designation, E_department, E_ctc, from, to } = formdata;
-  const handlechange = (e) => {
-    const { name, value } = e.target;
-    setdata({ ...formdata, [name]: value });
-  };
-
+const ExperieceDetailFrom = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box
       sx={{
@@ -50,72 +48,99 @@ const ExperieceDetailFrom = ({ formdata, setdata }) => {
       }}
     >
       <Paper variant="outlined" sx={{ padding: "30px", borderRadius: "30px" }}>
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="company"
-          type="text"
-          variant="standard"
-          name="company"
-          value={company}
-          onChange={handlechange}
+        <Controller
+          control={control}
+          name="E_company"
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Company"
+              variant="standard"
+              type="text"
+              {...field}
+              error={Boolean(errors.E_company)}
+              helperText={errors.E_company?.message}
+            />
+          )}
         />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="Designation"
-          type="text"
-          variant="standard"
+        <Controller
+          control={control}
           name="E_designation"
-          value={E_designation}
-          onChange={handlechange}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Designation"
+              variant="standard"
+              type="text"
+              {...field}
+            />
+          )}
         />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="Department"
-          type="text"
-          variant="standard"
+        <Controller
+          control={control}
           name="E_department"
-          value={E_department}
-          onChange={handlechange}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Department"
+              variant="standard"
+              type="text"
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="E_ctc"
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="CTC"
+              variant="standard"
+              type="text"
+              {...field}
+            />
+          )}
         />
 
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="CTC"
-          variant="standard"
-          type="number"
-          name="E_ctc"
-          value={E_ctc}
-          onChange={handlechange}
-        />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label=" from"
-          variant="standard"
-          type={"date"}
-          InputLabelProps={{
-            shrink: true,
-          }}
+        <Controller
+          control={control}
           name="from"
-          value={from}
-          onChange={handlechange}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label=" From"
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...field}
+            />
+          )}
         />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="to"
-          variant="standard"
-          type={"date"}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          name="to"
-          value={to}
-          onChange={handlechange}
+        <Controller
+          control={control}
+          name="To"
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label=" To"
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...field}
+            />
+          )}
         />
       </Paper>
     </Box>

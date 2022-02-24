@@ -1,67 +1,103 @@
-import React from "react";
-import { Container, InputLabel, TextField } from "@mui/material";
+import React, { useState } from "react";
+import { Container, TextField } from "@mui/material";
+import { Controller, useFormContext } from "react-hook-form";
 
-function Currentstatus({ formdata, setdata }) {
-  const { designation, department, ctc, workingForm } = formdata;
+function Currentstatus() {
+  const {
+    control,
+    formState: { errors },
+    setValue,
+  } = useFormContext();
 
-  const handlechange = (e) => {
-    const { name, value } = e.target;
-    setdata({ ...formdata, [name]: value });
-  };
   return (
     <div style={{ textAlign: "center" }}>
       <h2>Current Status</h2>
       <Container>
-        <TextField
-          fullWidth
-          id="standard-basic"
-          variant="standard"
-          type="text"
-          value="Albiorix Technology Private Limited"
+        <Controller
+          control={control}
+          name="company"
+          render={({ field }) => (
+            // console.log(filed)
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="company"
+              variant="standard"
+              type="text"
+              {...field}
+            />
+          )}
         />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="Designation"
-          type="text"
-          variant="standard"
+        <Controller
+          control={control}
           name="designation"
-          value={designation}
-          onChange={handlechange}
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Designation"
+              variant="standard"
+              type="text"
+              {...field}
+              error={Boolean(errors.designation)}
+              helperText={errors.designation?.message}
+            />
+          )}
         />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="Department"
-          type="text"
-          variant="standard"
+        <Controller
+          control={control}
           name="department"
-          value={department}
-          onChange={handlechange}
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Department"
+              variant="standard"
+              type="text"
+              {...field}
+              error={Boolean(errors.department)}
+              helperText={errors.department?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="ctc"
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="CTC"
+              variant="standard"
+              type="text"
+              {...field}
+              error={Boolean(errors.ctc)}
+              helperText={errors.ctc?.message}
+            />
+          )}
         />
 
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="CTC"
-          variant="standard"
-          type="number"
-          name="ctc"
-          value={ctc}
-          onChange={handlechange}
-        />
-        <TextField
-          fullWidth
-          id="standard-basic"
-          label="Working from"
-          variant="standard"
-          type={"date"}
-          InputLabelProps={{
-            shrink: true,
-          }}
+        <Controller
+          control={control}
           name="workingForm"
-          value={workingForm}
-          onChange={handlechange}
+          rules={{ required: "required" }}
+          render={({ field }) => (
+            <TextField
+              fullWidth
+              id="standard-basic"
+              label="Working Form"
+              type="date"
+              variant="standard"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              {...field}
+              error={Boolean(errors.workingForm)}
+              helperText={errors.workingForm?.message}
+            />
+          )}
         />
       </Container>
     </div>
