@@ -1,7 +1,9 @@
 import * as React from "react";
 import { styled } from "@mui/system";
-
-import { useSelector } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
+import { selectDetails } from "./redux/actionCreator";
 
 const Root = styled("div")`
   table {
@@ -23,8 +25,12 @@ const Root = styled("div")`
 `;
 
 export default function UserTable() {
+  const dispatch = useDispatch();
   const { employess } = useSelector((state) => state);
   console.log("employess", employess);
+  const updateHandler = (employee) => {
+    dispatch(selectDetails(employee));
+  };
 
   return (
     <div>
@@ -35,6 +41,7 @@ export default function UserTable() {
               <th>Name </th>
               <th>Designation</th>
               <th>Department</th>
+              <th>update</th>
             </tr>
           </thead>
           <tbody>
@@ -47,6 +54,11 @@ export default function UserTable() {
                   </td>
                   <td>{designation}</td>
                   <td>{department}</td>
+                  <td>
+                    <Button onClick={() => updateHandler(value)}>
+                      <EditIcon />
+                    </Button>
+                  </td>
                 </tr>
               );
             })}

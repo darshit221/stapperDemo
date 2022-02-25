@@ -13,7 +13,6 @@ import Bankdtails from "./Forms/Bankdtails";
 import Currentstatus from "./Forms/Currentstatus";
 import ExperienceDetails from "./Forms/ExperienceDetails";
 import EductionDetails from "./Forms/EductionDetails";
-import Listing from "./Forms/Listing";
 import Professionaldetails from "./Forms/Professionaldetails";
 import PersonalDetail from "./Forms/Personaldetail";
 import { useDispatch } from "react-redux";
@@ -50,16 +49,18 @@ export default function EmployeeForm() {
       department: "",
       ctc: "",
       workingForm: "",
-      E_company: "",
-      E_designation: "",
-      E_department: "",
-      E_ctc: "",
-      from: "",
-      to: "",
-      course: "",
-      university: "",
-      passOn: "",
-      grade: "",
+      Experiencedetails: [
+        {
+          E_company: "",
+          E_designation: "",
+          E_department: "",
+          E_ctc: "",
+          from: "",
+          To: "",
+        },
+      ],
+
+      Eductiondetails: [{ course: "", university: "", passOn: "", grade: "" }],
     },
   });
 
@@ -152,7 +153,7 @@ export default function EmployeeForm() {
                   >
                     Previous
                   </Button>
-                  <Link to="/">
+                  <Link to="/" style={{ textDecoration: "none" }}>
                     <Button
                       variant="outlined"
                       sx={{ color: "red", borderColor: "red", mr: 1 }}
