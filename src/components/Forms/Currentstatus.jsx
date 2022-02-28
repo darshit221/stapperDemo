@@ -17,7 +17,6 @@ function Currentstatus() {
           control={control}
           name="company"
           render={({ field }) => (
-            // console.log(filed)
             <TextField
               fullWidth
               id="standard-basic"

@@ -17,7 +17,6 @@ function ExperienceDetails() {
     shouldUnregister: false,
     name: "Experiencedetails",
   });
-  // const elements = watch("Experiencedetails");
 
   const close = {
     position: "absolute",
@@ -42,11 +41,6 @@ function ExperienceDetails() {
       Add New Experiece
       <Box m={2}>
         {fields.map((item, index) => {
-          console.log(
-            errors.Experiencedetails &&
-              errors.Experiencedetails[index].E_company.message
-          );
-
           return (
             <Paper
               sx={{

@@ -15,9 +15,14 @@ import ExperienceDetails from "./Forms/ExperienceDetails";
 import EductionDetails from "./Forms/EductionDetails";
 import Professionaldetails from "./Forms/Professionaldetails";
 import PersonalDetail from "./Forms/Personaldetail";
-import { useDispatch } from "react-redux";
-import { addDetails } from "./redux/actionCreator";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addDetails,
+  selectDetails,
+  updateDetails,
+} from "./redux/actionCreator";
 import { Link, useNavigate } from "react-router-dom";
+import { UPDATE_DETAILS } from "./redux/actionType";
 
 const steps = [
   "Personal Details",
@@ -30,38 +35,42 @@ const steps = [
 
 export default function EmployeeForm() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const method = useForm({
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      dob: "",
-      phone: "",
-      email: "",
-      accountNumber: "",
-      ifsc: "",
-      panCard: "",
-      adharCard: "",
-      year: "",
-      month: "",
-      skills: [],
-      company: "Albiorix Technology Private Limited",
-      designation: "",
-      department: "",
-      ctc: "",
-      workingForm: "",
-      Experiencedetails: [
-        {
-          E_company: "",
-          E_designation: "",
-          E_department: "",
-          E_ctc: "",
-          from: "",
-          To: "",
-        },
-      ],
+  const { employee } = useSelector((state) => state);
 
-      Eductiondetails: [{ course: "", university: "", passOn: "", grade: "" }],
-    },
+  let intialvalue = {
+    firstName: " ",
+    lastName: "",
+    dob: "",
+    phone: "",
+    email: "",
+    accountNumber: "",
+    ifsc: "",
+    panCard: "",
+    adharCard: "",
+    year: "",
+    month: "",
+    skills: [],
+    company: "Albiorix Technology Private Limited",
+    designation: "",
+    department: "",
+    ctc: "",
+    workingForm: "",
+    Experiencedetails: [
+      {
+        E_company: "",
+        E_designation: "",
+        E_department: "",
+        E_ctc: "",
+        from: "",
+        To: "",
+      },
+    ],
+
+    Eductiondetails: [{ course: "", university: "", passOn: "", grade: "" }],
+  };
+  intialvalue = employee || intialvalue;
+  const method = useForm({
+    defaultValues: intialvalue,
   });
 
   const getStepContent = (activeStep) => {
@@ -94,23 +103,31 @@ export default function EmployeeForm() {
     navigate("/");
   };
 
-  const resetData = () => {
-    method.reset();
+  const handle = (data) => {
+    if (employee.id) {
+      dispatch(updateDetails(data));
+      dispatch(selectDetails({}));
+      back();
+    } else {
+      dispatch(addDetails(data));
+      back();
+    }
   };
   const dispatch = useDispatch();
   const handleNext = (data) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if (activeStep == 5) {
-      dispatch(addDetails(data));
-      resetData();
-      back();
+      handle(data);
     }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
+  const onSave = () => {
+    const values = method.getValues();
+    handle(values);
+  };
   return (
     <Paper sx={{ width: "80%", margin: "auto", padding: "20px" }}>
       <Box sx={{ width: "100%" }}>
@@ -135,12 +152,11 @@ export default function EmployeeForm() {
                 }}
               >
                 <Button
-                  color="inherit"
-                  disabled
                   sx={{ mr: 1 }}
                   variant="contained"
+                  onClick={() => onSave()}
                 >
-                  Remove
+                  save
                 </Button>
                 <Box>
                   <Button
