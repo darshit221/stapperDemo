@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import "./style.css";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -59,7 +60,9 @@ function Professionaldetails() {
   };
   return (
     <Container>
-      <div style={{ textAlign: "center" }}>
+      <div className="center">
+        <h2>Professional Details</h2>
+
         <InputLabel htmlFor="input-with-icon-adornment">
           <InputLabel htmlFor="input-with-icon-adornment">Resume</InputLabel>
           <TextField

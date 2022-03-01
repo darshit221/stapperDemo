@@ -1,13 +1,14 @@
 import { Container, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-function Bankdtails() {
+import "./style.css";
+function BankDetails() {
   const {
     control,
     formState: { errors },
   } = useFormContext();
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="center">
       <h2>Bank Details</h2>
       <Container>
         <Controller
@@ -111,4 +112,4 @@ function Bankdtails() {
   );
 }
 
-export default Bankdtails;
+export default BankDetails;

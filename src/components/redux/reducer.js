@@ -31,29 +31,7 @@ const detailReducer = (state = initialState, { type, payload }) => {
         const user=state.employess.filter(item=>item.id!=payload)
         return {
           ...state,employess:[...user]
-        }
-
-    
-        
-
-
-
-
-
-
-
-
-
-
-
-
-        
-      
-      
-      
-      
-    
-        
+        } 
     default:
       return state;
   }

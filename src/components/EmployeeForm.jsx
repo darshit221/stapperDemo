@@ -8,11 +8,11 @@ import Button from "@mui/material/Button";
 import { FormProvider, useForm } from "react-hook-form";
 import { Paper } from "@mui/material";
 
-import Bankdtails from "./Forms/Bankdtails";
+import BankDetails from "./Forms/BankDetails";
 
 import Currentstatus from "./Forms/Currentstatus";
 import ExperienceDetails from "./Forms/ExperienceDetails";
-import EductionDetails from "./Forms/EductionDetails";
+import EducationDetails from "./Forms/EducationDetails";
 import Professionaldetails from "./Forms/Professionaldetails";
 import PersonalDetail from "./Forms/Personaldetail";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,18 +22,17 @@ import {
   updateDetails,
 } from "./redux/actionCreator";
 import { Link, useNavigate } from "react-router-dom";
-import { UPDATE_DETAILS } from "./redux/actionType";
 
 const steps = [
   "Personal Details",
   "Bank Details",
-  "Personal Details",
+  "Professional Details",
   "Current Status",
   "Experience Details",
   "Educational Details",
 ];
 
-export default function EmployeeForm() {
+function EmployeeForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const { employee } = useSelector((state) => state);
 
@@ -66,7 +65,7 @@ export default function EmployeeForm() {
       },
     ],
 
-    Eductiondetails: [{ course: "", university: "", passOn: "", grade: "" }],
+    EducationDetails: [{ course: "", university: "", passOn: "", grade: "" }],
   };
   intialvalue = employee || intialvalue;
   const method = useForm({
@@ -79,7 +78,7 @@ export default function EmployeeForm() {
         return <PersonalDetail />;
         break;
       case 1:
-        return <Bankdtails />;
+        return <BankDetails />;
         break;
       case 2:
         return <Professionaldetails />;
@@ -91,7 +90,7 @@ export default function EmployeeForm() {
         return <ExperienceDetails />;
         break;
       case 5:
-        return <EductionDetails />;
+        return <EducationDetails />;
         break;
 
       default:
@@ -202,3 +201,5 @@ export default function EmployeeForm() {
     </Paper>
   );
 }
+
+export default EmployeeForm;

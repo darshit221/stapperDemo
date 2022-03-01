@@ -3,11 +3,11 @@ import { TextField, Button, Box, Paper } from "@mui/material";
 
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import CancelIcon from "@mui/icons-material/Cancel";
+import "./style.css";
 
-function EductionDetails() {
+function EducationDetails() {
   const {
     control,
-    watch,
 
     formState: { errors },
   } = useFormContext();
@@ -15,7 +15,7 @@ function EductionDetails() {
   const { fields, append, remove } = useFieldArray({
     control,
     shouldUnregister: false,
-    name: "Eductiondetails",
+    name: "EducationDetails",
   });
 
   const close = {
@@ -27,7 +27,7 @@ function EductionDetails() {
     borderRadius: "50%",
   };
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="center">
       <h2>EducationDetails</h2>
       <Button
         variant="contained"
@@ -61,7 +61,7 @@ function EductionDetails() {
               </Button>
               <Controller
                 control={control}
-                name={`Eductiondetails.${index}.course`}
+                name={`EducationDetails.${index}.course`}
                 rules={{ required: "required" }}
                 render={({ field }) => (
                   <TextField
@@ -71,17 +71,17 @@ function EductionDetails() {
                     variant="standard"
                     type="text"
                     {...field}
-                    error={!!errors.Eductiondetails}
+                    error={!!errors.EducationDetails}
                     helperText={
-                      errors.Eductiondetails &&
-                      errors.Eductiondetails[index].course.message
+                      errors.EducationDetails &&
+                      errors.EducationDetails[index].course.message
                     }
                   />
                 )}
               />
               <Controller
                 control={control}
-                name={`Eductiondetails.${index}.university`}
+                name={`EducationDetails.${index}.university`}
                 rules={{ required: "required" }}
                 render={({ field }) => (
                   <TextField
@@ -91,10 +91,10 @@ function EductionDetails() {
                     variant="standard"
                     type="text"
                     {...field}
-                    error={!!errors.Eductiondetails}
+                    error={!!errors.EducationDetails}
                     helperText={
-                      errors.Eductiondetails &&
-                      errors.Eductiondetails[index].university.message
+                      errors.EducationDetails &&
+                      errors.EducationDetails[index].university.message
                     }
                   />
                 )}
@@ -102,7 +102,7 @@ function EductionDetails() {
 
               <Controller
                 control={control}
-                name={`Eductiondetails.${index}.passOn`}
+                name={`EducationDetails.${index}.passOn`}
                 render={({ field }) => (
                   <TextField
                     fullWidth
@@ -119,7 +119,7 @@ function EductionDetails() {
               />
               <Controller
                 control={control}
-                name={`Eductiondetails.${index}.grade`}
+                name={`EducationDetails.${index}.grade`}
                 render={({ field }) => (
                   <TextField
                     fullWidth
@@ -139,4 +139,4 @@ function EductionDetails() {
   );
 }
 
-export default EductionDetails;
+export default EducationDetails;

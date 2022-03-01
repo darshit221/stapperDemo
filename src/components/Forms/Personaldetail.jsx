@@ -1,13 +1,15 @@
 import React from "react";
 import { Container, InputLabel, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
+import "./style.css";
+
 function PersonalDetail() {
   const {
     control,
     formState: { errors },
   } = useFormContext();
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="center">
       <h2>Personal Details</h2>
       <Container>
         <InputLabel htmlFor="input-with-icon-adornment">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-
+import "./style.css";
 function Currentstatus() {
   const {
     control,
@@ -10,7 +10,7 @@ function Currentstatus() {
   } = useFormContext();
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="center">
       <h2>Current Status</h2>
       <Container>
         <Controller

@@ -3,6 +3,7 @@ import { TextField, Button, Box, Paper } from "@mui/material";
 
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import CancelIcon from "@mui/icons-material/Cancel";
+import "./style.css";
 
 function ExperienceDetails() {
   const {
@@ -27,7 +28,7 @@ function ExperienceDetails() {
     borderRadius: "50%",
   };
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="center">
       <h2>ExperienceDetails</h2>
       <Button
         variant="contained"
