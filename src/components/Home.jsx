@@ -100,7 +100,7 @@ function Home() {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((value) => {
+                {employess.map((value) => {
                   const { id, firstName, designation, department } = value;
                   return (
                     <tr key={id}>
