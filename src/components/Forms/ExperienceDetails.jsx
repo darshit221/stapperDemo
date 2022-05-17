@@ -8,8 +8,6 @@ import "./style.css";
 function ExperienceDetails() {
   const {
     control,
-    watch,
-
     formState: { errors },
   } = useFormContext();
 

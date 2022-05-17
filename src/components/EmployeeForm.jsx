@@ -76,22 +76,16 @@ function EmployeeForm() {
     switch (activeStep) {
       case 0:
         return <PersonalDetail />;
-        break;
       case 1:
         return <BankDetails />;
-        break;
       case 2:
         return <Professionaldetails />;
-        break;
       case 3:
         return <Currentstatus />;
-        break;
       case 4:
         return <ExperienceDetails />;
-        break;
       case 5:
         return <EducationDetails />;
-        break;
 
       default:
         break;
@@ -115,7 +109,7 @@ function EmployeeForm() {
   const dispatch = useDispatch();
   const handleNext = (data) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if (activeStep == 5) {
+    if (activeStep === 5) {
       handle(data);
     }
   };
@@ -162,7 +156,6 @@ function EmployeeForm() {
                     color="inherit"
                     disabled={activeStep === 0}
                     onClick={handleBack}
-                    sx={{ mr: 1 }}
                     sx={{ mr: 1, color: "blue", borderColor: "blue" }}
                     variant="outlined"
                   >

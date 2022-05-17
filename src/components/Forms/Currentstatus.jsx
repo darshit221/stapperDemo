@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Container, TextField } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import "./style.css";
@@ -6,7 +5,6 @@ function Currentstatus() {
   const {
     control,
     formState: { errors },
-    setValue,
   } = useFormContext();
 
   return (

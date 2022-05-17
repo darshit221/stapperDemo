@@ -46,7 +46,7 @@ function Home() {
     let result = [];
 
     result = filteredData.filter((data) => {
-      return data.firstName.search(value) != -1;
+      return data.firstName.search(value) !== -1;
     });
     setFilteredData(result);
   };
