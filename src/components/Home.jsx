@@ -76,7 +76,7 @@ function Home() {
                 }}
               >
                 <TextField
-                  label="search"
+                  label="search here"
                   onChange={(event) => handleSearch(event)}
                 />
               </Box>
